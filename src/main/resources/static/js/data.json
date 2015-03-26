@@ -1,0 +1,17 @@
+[
+  {
+    "name": "deployment-f7a4084d-21ce-4cb3-a890-873a35aeae9a",
+    "main": "org.vertx.mods.web.WebServer",
+    "instances": 1
+  },
+  {
+    "name": "deployment-f41aed36-9541-4d81-b460-08e5d4af8e17",
+    "main": "com.github.bpark.vertx.vdeployer.ServerVerticle",
+    "instances": 1
+  },
+  {
+    "name": "deployment-a34ff440-aedc-4f18-b572-c84cd4e500c6",
+    "main": "com.github.bpark.vertx.vdeployer.DeployerVerticle",
+    "instances": 1
+  }
+]
