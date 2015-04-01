@@ -1,32 +1,61 @@
+<!--
+  ~ Copyright 2015 Burt Parkers
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <div class="modal fade" id="addModuleDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-primary">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="addModuleDialogTitle">Add Module</h4>
+                <h4 class="modal-title text-white" id="addModuleDialogTitle">Add Module</h4>
             </div>
-            <form ng-submit="doAddModule()" ng-controller="ModuleDialogCtrl">
+            <form class="form-horizontal" ng-submit="doAddModule()" ng-controller="ModuleDialogCtrl">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="group">Group-Id</label>
-                        <input type="text" class="form-control" ng-model="groupId" id="group"
-                               placeholder="com.example.group">
+                        <label for="group" class="col-sm-2 control-label">Group-Id</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="groupId" id="group"
+                                   placeholder="com.example.group">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="artifact">Artifact-Id</label>
-                        <input type="text" class="form-control" ng-model="artifactId" id="artifact"
-                               placeholder="artifact-id">
+                        <label for="artifact" class="col-sm-2 control-label">Artifact-Id</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="artifactId" id="artifact"
+                                   placeholder="artifact-id">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="version">Version</label>
-                        <input type="text" class="form-control" ng-model="version" id="version" placeholder="version">
+                        <label for="version" class="col-sm-2 control-label">Version</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="version" id="version"
+                                   placeholder="version">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="instances">Instances</label>
-                        <input type="text" class="form-control" ng-model="instances" id="instances"
-                               placeholder="version">
+                        <label for="instances" class="col-sm-2 control-label">Instances</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" ng-model="instances" id="instances"
+                                   placeholder="version">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Config</label>
+                        <div id="jsoneditor" class="col-sm-10" style="height: 200px;"></div>
                     </div>
                 </div>
                 <div class="modal-footer">

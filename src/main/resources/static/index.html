@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<!--
+  ~ Copyright 2015 Burt Parkers
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <html lang="en" ng-app="VertxConsoleModule">
 <head>
     <meta charset="utf-8">
@@ -6,29 +22,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+   <!-- <link rel="icon" href="../../favicon.ico">-->
 
     <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <link href="lib/jsoneditor/jsoneditor.css" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template -->
-    <link href="css/starter-template.css" rel="stylesheet">
+    <link href="css/mod-webconsole.css" rel="stylesheet">
 
-    <script src="js/jquery-1.11.1.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="lib/jquery/jquery-1.11.1.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="bootstrap/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="js/angular.js"></script>
-    <script src="js/app.js"></script>
+    <script src="lib/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="lib/angularjs/angular.js"></script>
+    <script src="lib/jsoneditor/jsoneditor.js"></script>
+    <script src="lib/loadingbar/bootstrap-waitingfor.js"></script>
 
-<!--    <script type="javascript">
-        $('#myTab').find('a').click(function (e) {
-            e.preventDefault();
-            $(this).tab('show');
-        })
-    </script>-->
+    <script src="js/app.js"></script>
 
 </head>
 
@@ -51,16 +64,11 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
     </div>
 </nav>
 
 <div class="container">
-
-   <!-- <ul id="myTab" class="nav nav-pills" role="tablist">
-        <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Current</a></li>
-        <li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">New</a></li>
-    </ul>-->
 
     <div id="myTabContent" class="tab-content" ng-controller="DeploymentCtrl">
         <div role="tabpanel" class="tab-pane in active" id="home" aria-labelledBy="home-tab">
@@ -72,7 +80,20 @@
             <hr>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModuleDialog">Add Module</button>
             <div ng-include="'modules/addModuleDialog.html'"></div>
+            <div ng-include="'modules/errorDialog.html'"></div>
             <hr>
+
+            <div ng-switch="messageType" ng-controller="MessageCtrl">
+                    <div ng-switch-when="ERROR" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Error!</strong> {{message}}.
+                    </div>
+                    <div ng-switch-when="SUCCESS" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Success!</strong> {{message}}.
+                    </div>
+                <div ng-switch-default></div>
+            </div>
 
             <table class="table table-hover">
                 <thead>
@@ -125,33 +146,10 @@
         </div>
         </div>
         </div>
-        <!--<div role="tabpanel" class="tab-pane" id="profile" aria-labelledBy="profile-tab">
-            &lt;!&ndash;<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p> &ndash;&gt;
-            <div class="col-md-8">
-            <form>
-                <div class="form-group">
-                    <label for="group">Group-Id:</label>
-                    <input type="text" class="form-control" id="group" placeholder="com.example.group">
-                </div>
-                <div class="form-group">
-                    <label for="artifact">Artifact-Id:</label>
-                    <input type="text" class="form-control" id="artifact" placeholder="artifact-id">
-                </div>
-                <div class="form-group">
-                    <label for="version">Version:</label>
-                    <input type="text" class="form-control" id="version" placeholder="version">
-                </div>
-                <div class="form-group">
-                    <label for="instances">Instances:</label>
-                    <input type="text" class="form-control" id="instances" placeholder="version">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            </div>
-        </div>-->
+
     </div>
 
-</div><!-- /.container -->
+</div>
 
 </body>
 </html>
