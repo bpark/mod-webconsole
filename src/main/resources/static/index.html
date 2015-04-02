@@ -24,7 +24,7 @@
     <meta name="author" content="">
    <!-- <link rel="icon" href="../../favicon.ico">-->
 
-    <title>Starter Template for Bootstrap</title>
+    <title>vert.x web console</title>
 
     <!-- Bootstrap core CSS -->
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -70,10 +70,8 @@
 
 <div class="container">
 
-    <div id="myTabContent" class="tab-content" ng-controller="DeploymentCtrl">
-        <div role="tabpanel" class="tab-pane in active" id="home" aria-labelledBy="home-tab">
-        <div class="row">
-        <div class="col-md-8">
+    <div id="content" ng-controller="DeploymentCtrl">
+        <div>
 
             <h2>Deployments</h2>
 
@@ -101,6 +99,8 @@
                     <th>Name</th>
                     <th>Main</th>
                     <th>Instances</th>
+                    <th>Auto Redeploy</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -108,43 +108,16 @@
                     <td>{{deployment.name}}</td>
                     <td>{{deployment.main}}</td>
                     <td>{{deployment.instances}}</td>
+                    <td>{{selected.autoRedeploy}}</td>
+                    <td><button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#undeployDialog">
+                        <span class="glyphicon glyphicon-minus-sign"></span>
+                    </button></td>
                 </tr>
                 </tbody>
             </table>
 
-        </div>
-        <div class="col-md-4">
-            <h2>Details</h2>
-
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Name</h4>
-                    <p class="list-group-item-text">{{selected.name}}</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Main</h4>
-                    <p class="list-group-item-text">{{selected.main}}</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Instances</h4>
-                    <p class="list-group-item-text">{{selected.instances}}</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Key</h4>
-                    <p class="list-group-item-text">{{selected.key}}</p>
-                </li>
-                <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Auto redeploy</h4>
-                    <p class="list-group-item-text">{{selected.autoRedeploy}}</p>
-                </li>
-            </ul>
-
-            <hr>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#undeployDialog">Undeploy</button>
-
             <div ng-include="'modules/undeployDialog.html'"></div>
-        </div>
-        </div>
+
         </div>
 
     </div>

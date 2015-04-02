@@ -17,12 +17,15 @@ angular.module("VertxConsoleModule", [])
         };
 
         $scope.doUndeploy = function() {
+            waitingDialog.show("Undeploying...");
             $http.post("/remove", {id: selected.name}).success(function(response) {
                 $scope.deployments.splice(selected.index - 1, 1);
                 $rootScope.$broadcast("SUCCESS_CHANNEL", "Removed " + $scope.selected.main);
                 $scope.selected = $scope.deployments[0];
+                waitingDialog.hide();
             }).error(function(response) {
                 $rootScope.$broadcast("ERROR_CHANNEL", response.cause);
+                waitingDialog.hide();
             });
         };
 
@@ -44,13 +47,17 @@ angular.module("VertxConsoleModule", [])
                 config: jsonEditor.getJson()
             };
 
-            $http.post("/deploy", data).success(function(deploymentResponse) {
+            $http.post("/deploy", data).success(function(response) {
+                $rootScope.$broadcast("SUCCESS_CHANNEL", "Deployment successful");
+                $scope.deployments.splice(0, $scope.deployments.length);
+                response.forEach(function(item) {
+                    $scope.deployments.push(item);
+                });
                 waitingDialog.hide();
-                $rootScope.$broadcast("SUCCESS_CHANNEL", "Deployment successful.");
-            }).error(function(deploymentResponse) {
-                waitingDialog.hide();
-                $rootScope.$broadcast("ERROR_CHANNEL", deploymentResponse.cause);
+            }).error(function(response) {
+                $rootScope.$broadcast("ERROR_CHANNEL", response.cause);
                 $("#errorDialog").modal("show");
+                waitingDialog.hide();
             });
 
         };

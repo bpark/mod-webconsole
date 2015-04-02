@@ -36,7 +36,6 @@ public class DeployHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest event) {
         event.bodyHandler(data -> {
-            System.out.println(data.toString());
             JsonObject object = new JsonObject(data.toString());
             Integer instances = Integer.valueOf(object.getString("instances"));
             container.deployModule(createModuleLocator(object), object.getObject("config"), instances, done -> {

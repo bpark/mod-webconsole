@@ -22,9 +22,8 @@ body {
     color: #ffffff;
 }
 
-.starter-template {
-    padding: 40px 15px;
-    text-align: center;
+.align-middle {
+    vertical-align: middle;
 }
 
 .modal-danger {
