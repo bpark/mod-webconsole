@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module("VertxConsoleModule", [])
-    .controller("DeploymentCtrl", function($scope, $http) {
+
+    .controller("DeploymentCtrl", function($scope, $rootScope, $http) {
 
         var selected;
 
@@ -13,13 +14,15 @@ angular.module("VertxConsoleModule", [])
         $scope.setSelected = function() {
             $scope.selected = this.deployment;
             selected = $scope.selected;
-            //alert($scope.selected.main);
         };
 
         $scope.doUndeploy = function() {
-            $http.post("/remove", {id: selected.name}).then(function(undeploymentResponse) {
+            $http.post("/remove", {id: selected.name}).success(function(response) {
                 $scope.deployments.splice(selected.index - 1, 1);
+                $rootScope.$broadcast("SUCCESS_CHANNEL", "Removed " + $scope.selected.main);
                 $scope.selected = $scope.deployments[0];
+            }).error(function(response) {
+                $rootScope.$broadcast("ERROR_CHANNEL", response.cause);
             });
         };
 
@@ -81,47 +84,32 @@ angular.module("VertxConsoleModule", [])
         })
     })
 
-    .service("errorService", function() {
-        var errorObject;
-
-        var setErrorObject = function(error) {
-            errorObject = error;
-        };
-
-        var getErrorObject = function() {
-            return errorObject;
-        };
-
-        return {
-            setErrorObject: setErrorObject,
-            getErrorObject: getErrorObject
-        };
-    })
-
-    .factory("jsonEditor", function() {
+    .service("jsonEditor", function() {
 
         var editor;
 
+        var init = function() {
+            var container = document.getElementById('jsoneditor');
+
+            var options = {
+                "mode": "code",
+                "indentation": 3,
+                error: function (err) {
+                    alert(err.toString());
+                }
+            };
+
+            editor = new JSONEditor(container, options, {});
+            return editor;
+        };
+
+        var getJson = function() {
+            return editor.get();
+        };
+
         return {
-
-            init: function() {
-                var container = document.getElementById('jsoneditor');
-
-                var options = {
-                    "mode": "code",
-                    "indentation": 3,
-                    error: function (err) {
-                        alert(err.toString());
-                    }
-                };
-
-                editor = new JSONEditor(container, options, {});
-                return editor;
-            },
-
-            getJson: function() {
-                return editor.get();
-            }
+            init: init,
+            getJson: getJson
         };
     })
 

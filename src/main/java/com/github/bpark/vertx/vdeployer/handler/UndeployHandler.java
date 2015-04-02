@@ -35,10 +35,18 @@ public class UndeployHandler implements Handler<HttpServerRequest> {
 
     @Override
     public void handle(HttpServerRequest event) {
-        event.bodyHandler(body -> {
-            JsonObject object = new JsonObject(body.toString());
-            container.undeployVerticle(object.getString("id"));
-            event.response().end(informationProvider.listDeployments().toString());
-        });
+        try {
+            event.bodyHandler(body -> {
+                JsonObject object = new JsonObject(body.toString());
+                container.undeployVerticle(object.getString("id"), done -> {
+                    event.response().end(informationProvider.listDeployments().toString());
+                });
+            });
+        } catch (Exception e) {
+            event.response().setStatusCode(500);
+            JsonObject message = new JsonObject();
+            message.putString("cause", e.getMessage());
+            event.response().end(message.toString());
+        }
     }
 }
