@@ -14,15 +14,22 @@
  * limitations under the License.
  */
 
-package com.github.bpark.vertx.vdeployer.handler;
+package com.github.bpark.vertx.webconsole.handler;
 
+import com.github.bpark.vertx.webconsole.InformationProvider;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.http.HttpServerRequest;
 
-public class VersionHandler implements Handler<HttpServerRequest> {
+public class ListDeploymentsHandler implements Handler<HttpServerRequest> {
+
+    private InformationProvider informationProvider;
+
+    public ListDeploymentsHandler(InformationProvider informationProvider) {
+        this.informationProvider = informationProvider;
+    }
 
     @Override
     public void handle(HttpServerRequest event) {
-        event.response().end("1.0");
+        event.response().end(informationProvider.listDeployments().toString());
     }
 }

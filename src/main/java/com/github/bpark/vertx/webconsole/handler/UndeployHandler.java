@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.github.bpark.vertx.vdeployer.handler;
+package com.github.bpark.vertx.webconsole.handler;
 
-import com.github.bpark.vertx.vdeployer.InformationProvider;
+import com.github.bpark.vertx.webconsole.InformationProvider;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.http.HttpServerRequest;
 import org.vertx.java.core.json.JsonObject;

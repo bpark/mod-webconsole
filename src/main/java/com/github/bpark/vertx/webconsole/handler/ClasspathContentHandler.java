@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.bpark.vertx.vdeployer.handler;
+package com.github.bpark.vertx.webconsole.handler;
 
-import com.github.bpark.vertx.vdeployer.ServerVerticle;
+import com.github.bpark.vertx.webconsole.WebConsoleVerticle;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import org.apache.commons.io.IOUtils;
 import org.vertx.java.core.Handler;
@@ -42,7 +42,7 @@ public class ClasspathContentHandler implements Handler<HttpServerRequest> {
 
         String path = serverRequest.path();
 
-        InputStream inputStream = ServerVerticle.class.getResourceAsStream(path);
+        InputStream inputStream = WebConsoleVerticle.class.getResourceAsStream(path);
         if (inputStream != null) {
             try {
 

@@ -1,6 +1,6 @@
 {
 
-  "main": "com.github.bpark.vertx.vdeployer.DeployerVerticle",
+  "main": "com.github.bpark.vertx.webconsole.WebConsoleVerticle",
 
   "description":"A web frontend to manage vert.x deployments",
   "licenses": ["The Apache Software License Version 2.0"],

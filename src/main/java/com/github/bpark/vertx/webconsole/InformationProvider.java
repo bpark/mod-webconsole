@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.bpark.vertx.vdeployer;
+package com.github.bpark.vertx.webconsole;
 
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
