@@ -43,6 +43,13 @@
 
     <script src="js/app.js"></script>
 
+<!--    <script type="javascript">
+        $('#myTab').find('a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    </script>-->
+
 </head>
 
 <body>
@@ -60,9 +67,10 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Deployments</a></li>
-               <!-- <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>-->
+                <li role="presentation" class="active"><a href="#home" id="deployment-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Deployments</a></li>
+                <li role="presentation"><a href="#profile" role="tab" id="bus-tab" data-toggle="tab" aria-controls="profile">Bus</a></li>
+                <li><a href="#about">About</a></li>
+                <!-- <li><a href="#contact">Contact</a></li>-->
             </ul>
         </div>
     </div>
@@ -70,58 +78,10 @@
 
 <div class="container">
 
-    <div id="content" ng-controller="DeploymentCtrl">
-        <div>
-
-            <h2>Deployments</h2>
-
-            <hr>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModuleDialog">Add Module</button>
-            <div ng-include="'modules/addModuleDialog.html'"></div>
-            <div ng-include="'modules/errorDialog.html'"></div>
-            <hr>
-
-            <div ng-switch="messageType" ng-controller="MessageCtrl">
-                    <div ng-switch-when="ERROR" class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong>Error!</strong> {{message}}.
-                    </div>
-                    <div ng-switch-when="SUCCESS" class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong>Success!</strong> {{message}}.
-                    </div>
-                <div ng-switch-default></div>
-            </div>
-
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Main</th>
-                    <th>Instances</th>
-                    <th>Auto Redeploy</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="deployment in deployments" ng-click="setSelected();">
-                    <td>{{deployment.name}}</td>
-                    <td>{{deployment.main}}</td>
-                    <td>{{deployment.instances}}</td>
-                    <td>{{selected.autoRedeploy}}</td>
-                    <td><button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#undeployDialog">
-                        <span class="glyphicon glyphicon-minus-sign"></span>
-                    </button></td>
-                </tr>
-                </tbody>
-            </table>
-
-            <div ng-include="'modules/undeployDialog.html'"></div>
-
-        </div>
-
+    <div id="tabGroup" class="tab-content">
+        <div ng-include="'modules/deploymentTab.html'"></div>
+        <div ng-include="'modules/busTab.html'"></div>
     </div>
-
 </div>
 
 </body>

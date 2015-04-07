@@ -91,6 +91,16 @@ angular.module("VertxConsoleModule", [])
         })
     })
 
+    .controller("TabCtrl", function($scope) {
+        $scope.showTab = function() {
+            e.preventDefault();
+            $(this).tab('show');
+        };
+
+        $scope.$watch('$viewContentLoaded', function() {
+        });
+    })
+
     .service("jsonEditor", function() {
 
         var editor;
