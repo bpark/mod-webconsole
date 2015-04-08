@@ -92,12 +92,11 @@ angular.module("VertxConsoleModule", [])
     })
 
     .controller("TabCtrl", function($scope) {
-        $scope.showTab = function() {
-            e.preventDefault();
-            $(this).tab('show');
-        };
-
         $scope.$watch('$viewContentLoaded', function() {
+            $("#navigation-ul").find('a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            })
         });
     })
 

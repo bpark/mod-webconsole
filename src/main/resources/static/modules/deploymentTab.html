@@ -14,56 +14,60 @@
   ~ limitations under the License.
   -->
 
-<div role="tabpanel" class="tab-pane in active" id="deployment-tab" aria-labelledBy="home-tab">
-    <div id="content" ng-controller="DeploymentCtrl">
-        <div>
+<div id="content" ng-controller="DeploymentCtrl">
+    <div>
 
-            <h2>Deployments</h2>
+        <h2>Deployments</h2>
 
-            <hr>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModuleDialog">Add Module</button>
-            <div ng-include="'modules/addModuleDialog.html'"></div>
-            <div ng-include="'modules/errorDialog.html'"></div>
-            <hr>
+        <hr>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModuleDialog">Add Module
+        </button>
+        <div ng-include="'modules/addModuleDialog.html'"></div>
+        <div ng-include="'modules/errorDialog.html'"></div>
+        <hr>
 
-            <div ng-switch="messageType" ng-controller="MessageCtrl">
-                <div ng-switch-when="ERROR" class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Error!</strong> {{message}}.
-                </div>
-                <div ng-switch-when="SUCCESS" class="alert alert-success alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Success!</strong> {{message}}.
-                </div>
-                <div ng-switch-default></div>
+        <div ng-switch="messageType" ng-controller="MessageCtrl">
+            <div ng-switch-when="ERROR" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <strong>Error!</strong> {{message}}.
             </div>
-
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Main</th>
-                    <th>Instances</th>
-                    <th>Auto Redeploy</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="deployment in deployments" ng-click="setSelected();">
-                    <td>{{deployment.name}}</td>
-                    <td>{{deployment.main}}</td>
-                    <td>{{deployment.instances}}</td>
-                    <td>{{selected.autoRedeploy}}</td>
-                    <td><button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#undeployDialog">
-                        <span class="glyphicon glyphicon-minus-sign"></span>
-                    </button></td>
-                </tr>
-                </tbody>
-            </table>
-
-            <div ng-include="'modules/undeployDialog.html'"></div>
-
+            <div ng-switch-when="SUCCESS" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <strong>Success!</strong> {{message}}.
+            </div>
+            <div ng-switch-default></div>
         </div>
 
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Main</th>
+                <th>Instances</th>
+                <th>Auto Redeploy</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="deployment in deployments" ng-click="setSelected();">
+                <td>{{deployment.name}}</td>
+                <td>{{deployment.main}}</td>
+                <td>{{deployment.instances}}</td>
+                <td>{{selected.autoRedeploy}}</td>
+                <td>
+                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal"
+                            data-target="#undeployDialog">
+                        <span class="glyphicon glyphicon-minus-sign"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div ng-include="'modules/undeployDialog.html'"></div>
+
     </div>
+
 </div>
