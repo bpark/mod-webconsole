@@ -49,3 +49,17 @@ body {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
+.message-log {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.top-space-20 {
+    margin-top:20px;
+}
+
+.top-space-80 {
+    margin-top:80px;
+}

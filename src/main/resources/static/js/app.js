@@ -63,7 +63,7 @@ angular.module("VertxConsoleModule", [])
         };
 
         $scope.$watch('$viewContentLoaded', function() {
-            jsonEditor.init();
+            jsonEditor.init("jsoneditor");
         });
 
     })
@@ -100,12 +100,70 @@ angular.module("VertxConsoleModule", [])
         });
     })
 
+    .controller("BusCtrl", function($scope, $http, timeService) {
+
+        var eventBus;
+
+        $scope.connect = function() {
+            var data = {
+                channelId: $scope.channelId
+            };
+            $http.post("/channels", data).success(function(response) {
+
+                eventBus.registerHandler('msg.client', function(message) {
+                    $scope.message = message;
+                    $scope.$apply();
+                });
+
+                waitingDialog.hide();
+            }).error(function(response) {
+                $rootScope.$broadcast("ERROR_CHANNEL", response.cause);
+                $("#errorDialog").modal("show");
+                waitingDialog.hide();
+            });
+        };
+
+        $scope.send = function() {
+            eventBus.send("msg.client", $scope.messageId);
+        };
+
+        $scope.$watch('$viewContentLoaded', function() {
+
+            // get the eventbus
+            eventBus = new vertx.EventBus('http://localhost:8990/bridge');
+
+            $scope.messages = [];
+
+            // when the eventbus is ready, register a listener
+            eventBus.onopen = function() {
+
+                // register to address
+                /*
+                eventBus.registerHandler('msg.client', function(message) {
+                    $scope.messages.unshift({
+                        content: message,
+                        timestamp: timeService.formattedDate()
+                    });
+                    if ($scope.messages.length > 1) {
+                        $scope.messages.pop();
+                    }
+                    $scope.$apply();
+                }); */
+
+                // and register for server events
+                eventBus.registerHandler('msg.server', function(message) {
+                });
+            }
+        });
+
+    })
+
     .service("jsonEditor", function() {
 
         var editor;
 
-        var init = function() {
-            var container = document.getElementById('jsoneditor');
+        var init = function(elementid) {
+            var container = document.getElementById(elementid);
 
             var options = {
                 "mode": "code",
@@ -127,6 +185,18 @@ angular.module("VertxConsoleModule", [])
             init: init,
             getJson: getJson
         };
+    })
+
+    .service("timeService", function() {
+
+        var formattedDate = function() {
+            var date = new Date();
+            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        };
+
+        return {
+            formattedDate: formattedDate
+        }
     })
 
 ;

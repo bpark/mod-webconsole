@@ -15,7 +15,7 @@
  */
 package com.github.bpark.vertx.webconsole.handler;
 
-import com.github.bpark.vertx.webconsole.WebConsoleVerticle;
+import com.github.bpark.vertx.webconsole.WebConsole;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import org.apache.commons.io.IOUtils;
 import org.vertx.java.core.Handler;
@@ -42,7 +42,7 @@ public class ClasspathContentHandler implements Handler<HttpServerRequest> {
 
         String path = serverRequest.path();
 
-        InputStream inputStream = WebConsoleVerticle.class.getResourceAsStream(path);
+        InputStream inputStream = WebConsole.class.getResourceAsStream(path);
         if (inputStream != null) {
             try {
 

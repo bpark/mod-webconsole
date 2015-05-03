@@ -14,6 +14,113 @@
   ~ limitations under the License.
   -->
 
-<div>
-  <h4>Test content</h4>
+<div ng-controller="BusCtrl">
+    <h4>Test content</h4>
+
+    <!--<div class="list-group message-log" ng-controller="BusCtrl">
+      <a href="#" class="list-group-item" ng-repeat="message in messages track by $index">{{message.timestamp}}</a>
+    </div>-->
+
+    <div class="form-horizontal col-lg-8">
+
+    <form>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Channel</span>
+            <input type="text" class="form-control" placeholder="Channel" aria-describedby="basic-addon1" ng-model="channelId">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="connect();">Connect</button>
+            </span>
+        </div>
+        <div class="input-group top-space-20">
+            <span class="input-group-addon" id="basic-addon2">Send</span>
+            <textarea rows="5" class="form-control" placeholder="Send message content" aria-describedby="basic-addon2" ng-model="messageId"></textarea>
+            <!--<input type="text" class="form-control" placeholder="Channel" aria-describedby="basic-addon1">-->
+        </div>
+        <div class="top-space-20">
+            <button class="btn btn-primary pull-right" type="button" ng-click="">Send</button>
+        </div>
+    </form>
+
+    <div class="input-group top-space-80">
+        <span class="input-group-addon" id="basic-addon3">Receive</span>
+        <textarea rows="5" class="form-control" placeholder="Incoming Message" aria-describedby="basic-addon3">{{message}}</textarea>
+        <!--<input type="text" class="form-control" placeholder="Channel" aria-describedby="basic-addon1">-->
+    </div>
+
+    </div>
+    <!--<form class="form-horizontal">
+
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="form-group">
+            <label for="receive" class="col-xs-1 control-label">Connect:</label>
+
+            <div class="col-xs-5">
+                <input type="text" class="form-control" ng-model="receiveId" id="receive"
+                       placeholder="channel name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-1 control-label">Incoming</label>
+            <div class="panel panel-default message-log col-xs-10" ng-controller="BusCtrl">
+                <div class="panel-body" ng-repeat="message in messages track by $index">
+                    {{message.content}}
+                </div>
+            </div>
+        </div>
+    </form>-->
+
+   <!-- <form class="form-horizontal">
+        <div class="form-group">
+            <label for="send" class="col-xs-1 control-label">Connect:</label>
+
+            <div class="col-xs-5">
+                <input type="text" class="form-control" ng-model="sendId" id="send"
+                       placeholder="channel name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-1 control-label">Send</label>
+            <div id="sendeditor" class="col-xs-10" style="height: 200px;"></div>
+        </div>
+    </form>-->
+
+    <!--<ul class="list-group message-log" ng-controller="BusCtrl">
+      <li class="list-group-item col-sm-2" ng-repeat="message in messages track by $index">{{message.timestamp}}</li>
+        &lt;!&ndash;<li class="list-group-item col-sm-10">{{message.content}}</li>&ndash;&gt;
+    </ul>
+  -->
+    <!-- <div class="panel panel-default container" ng-controller="BusCtrl">
+       <div class="panel-body message-log">
+
+         <table class="table table-condensed table-striped table-hover">
+           <thead>
+           <tr>
+             <th class="col-sm-2">Name</th>
+             <th>Main</th>
+           </tr>
+           </thead>
+           <tbody>
+           <tr ng-repeat="message in messages track by $index">
+             <td>{{message.timestamp}}</td>
+             <td>{{message.content}}</td>
+           </tr>
+           </tbody>
+         </table>
+
+       </div>
+     </div>-->
+
+
+    <!--<div class="panel panel-default container" ng-controller="BusCtrl">
+      <div class="panel-body message-log">
+          <div class="row" ng-repeat="message in messages track by $index">
+            <div class="col-md-2 text-primary">{{message.timestamp}}:&nbsp;</div>
+            <div class="col-md-4">{{message.content}}</div>
+          </div>
+      </div>
+    </div>-->
 </div>
