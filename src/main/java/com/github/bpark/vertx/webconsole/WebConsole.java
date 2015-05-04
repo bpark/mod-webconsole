@@ -16,16 +16,12 @@
 
 package com.github.bpark.vertx.webconsole;
 
+import com.github.bpark.vertx.webconsole.communication.ChannelProxy;
+import com.github.bpark.vertx.webconsole.communication.SockJsConfig;
 import com.github.bpark.vertx.webconsole.handler.*;
 import org.vertx.java.busmods.BusModBase;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.RouteMatcher;
-import org.vertx.java.core.json.JsonArray;
-import org.vertx.java.core.json.JsonObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * @author bpark.
@@ -45,9 +41,9 @@ public class WebConsole extends BusModBase {
     private static final int DEFAULT_PORT = 8990;
 
 
-    private static final String TEXT = "Der geplante Pipeline-Deal zwischen Griechenland und Russland sorgt international für Aufmerksamkeit Nach Informationen von SPIEGEL ONLINE könnte das Geschäft schon am Dienstag festgezurrt werden und Athen bis zu fünf Milliarden Euro einbringen";
+    //private static final String TEXT = "Der geplante Pipeline-Deal zwischen Griechenland und Russland sorgt international für Aufmerksamkeit Nach Informationen von SPIEGEL ONLINE könnte das Geschäft schon am Dienstag festgezurrt werden und Athen bis zu fünf Milliarden Euro einbringen";
 
-    private Random random = new Random();
+    //private Random random = new Random();
 
     @Override
     public void start() {
@@ -70,19 +66,23 @@ public class WebConsole extends BusModBase {
         String host = getOptionalStringConfig(CONFIG_HOST, DEFAULT_HOST);
         int port = getOptionalIntConfig(CONFIG_PORT, DEFAULT_PORT);
 
+        ChannelProxy channelProxy = new ChannelProxy();
 
-        // set in and outbound permitted addresses
-        JsonObject config = new JsonObject().putString("prefix", "/bridge");
-        JsonArray inboundPermitted = new JsonArray();
-        inboundPermitted.add(new JsonObject().putString("address", "msg.client"));
-
-        JsonArray outboundPermitted = new JsonArray();
-        outboundPermitted.add(new JsonObject().putString("address", "msg.server"));
-        outboundPermitted.add(new JsonObject().putString("address", "msg.client"));
-
-        vertx.createSockJSServer(server).bridge(config, inboundPermitted, outboundPermitted);
+        SockJsConfig sockJsConfig = channelProxy.createSockJsConfig();
+        vertx.createSockJSServer(server).bridge(sockJsConfig.getConfig(), sockJsConfig.getInbound(), sockJsConfig.getOutbound());
 
         server.listen(port, host);
+
+        channelProxy.initComChannel(eb);
+
+        /*eb.registerHandler("rec", new Handler<Message<JsonObject>>() {
+
+            @Override
+            public void handle(Message<JsonObject> message) {
+                JsonObject messageObject = message.body();
+                System.out.println(messageObject.toString());
+            }
+        });
 
         long timerID = vertx.setPeriodic(1000, timerID1 -> {
             String[] words = TEXT.split(" ");
@@ -92,7 +92,7 @@ public class WebConsole extends BusModBase {
             }
             eb.publish("phrase", String.join(" ", phrase.toArray(new String[phrase.size()])));
             logger.info("Sending text");
-        });
+        });*/
     }
 
 }

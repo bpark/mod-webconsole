@@ -1,35 +1,9 @@
 'use strict';
 
-angular.module("VertxConsoleModule", [])
-
-    .controller("DeploymentCtrl", function($scope, $rootScope, $http) {
-
-        var selected;
-
-        $http.get('/resources').then(function(deploymentResponse) {
-            $scope.deployments = deploymentResponse.data;
-            $scope.selected = $scope.deployments[0];
-        });
-
-        $scope.setSelected = function() {
-            $scope.selected = this.deployment;
-            selected = $scope.selected;
-        };
-
-        $scope.doUndeploy = function() {
-            waitingDialog.show("Undeploying...");
-            $http.post("/remove", {id: selected.name}).success(function(response) {
-                $scope.deployments.splice(selected.index - 1, 1);
-                $rootScope.$broadcast("SUCCESS_CHANNEL", "Removed " + $scope.selected.main);
-                $scope.selected = $scope.deployments[0];
-                waitingDialog.hide();
-            }).error(function(response) {
-                $rootScope.$broadcast("ERROR_CHANNEL", response.cause);
-                waitingDialog.hide();
-            });
-        };
-
-    })
+angular.module("VertxConsoleModule", [
+    "VertxConsoleModule.deployments",
+    "VertxConsoleModule.bus"
+])
 
     .controller("ModuleDialogCtrl", function($scope, $rootScope, $http, jsonEditor) {
 
@@ -98,64 +72,6 @@ angular.module("VertxConsoleModule", [])
                 $(this).tab('show');
             })
         });
-    })
-
-    .controller("BusCtrl", function($scope, $http, timeService) {
-
-        var eventBus;
-
-        $scope.connect = function() {
-            var data = {
-                channelId: $scope.channelId
-            };
-            $http.post("/channels", data).success(function(response) {
-
-                eventBus.registerHandler('msg.client', function(message) {
-                    $scope.message = message;
-                    $scope.$apply();
-                });
-
-                waitingDialog.hide();
-            }).error(function(response) {
-                $rootScope.$broadcast("ERROR_CHANNEL", response.cause);
-                $("#errorDialog").modal("show");
-                waitingDialog.hide();
-            });
-        };
-
-        $scope.send = function() {
-            eventBus.send("msg.client", $scope.messageId);
-        };
-
-        $scope.$watch('$viewContentLoaded', function() {
-
-            // get the eventbus
-            eventBus = new vertx.EventBus('http://localhost:8990/bridge');
-
-            $scope.messages = [];
-
-            // when the eventbus is ready, register a listener
-            eventBus.onopen = function() {
-
-                // register to address
-                /*
-                eventBus.registerHandler('msg.client', function(message) {
-                    $scope.messages.unshift({
-                        content: message,
-                        timestamp: timeService.formattedDate()
-                    });
-                    if ($scope.messages.length > 1) {
-                        $scope.messages.pop();
-                    }
-                    $scope.$apply();
-                }); */
-
-                // and register for server events
-                eventBus.registerHandler('msg.server', function(message) {
-                });
-            }
-        });
-
     })
 
     .service("jsonEditor", function() {
