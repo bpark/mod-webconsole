@@ -2,7 +2,7 @@
 
 angular.module('VertxConsoleModule.bus', [])
 
-    .controller("BusCtrl", function($scope) {
+    .controller("BusCtrl", function($scope, $location) {
 
         var eventBus;
 
@@ -36,7 +36,9 @@ angular.module('VertxConsoleModule.bus', [])
         $scope.$watch('$viewContentLoaded', function() {
 
             // get the eventbus
-            eventBus = new vertx.EventBus('http://localhost:8990/bridge');
+            $location.path("bridge");
+            var bridgeUrl = $location.protocol() + '://'+ $location.host() +':'+  '8990/bridge';
+            eventBus = new vertx.EventBus(bridgeUrl);
 
             // when the eventbus is ready, register a listener
             eventBus.onopen = function() {
